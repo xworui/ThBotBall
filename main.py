@@ -6,15 +6,6 @@ import random
 bot = telebot.TeleBot('5616482633:AAFBlC3mIWaXx8-syrPJFK-PucF4NM9WsQs')
 
 
-@bot.message_handler(command=['qp'])
-def qp(message):
-    markup = types.ReplyKeyboardMarkup()
-    website = types.KeyboardButton('BOOB')
-    qwp = types.KeyboardButton('qwp')
-    markup.add(website, qwp)
-    bot.send_message(message.chat.id, 'Бам', reply_markup=markup)
-
-
 @bot.message_handler(commands=['ball'])
 def ball(message):
     mess = ['да', 'нет',  'наверное', 'может быть', 'спроси позже', 'херня', 'отличная идея', 'есть шанс', 'прекрасная возможность', 'забудь',' не думай об этом']
@@ -34,16 +25,18 @@ def comp(message):
 def help(message):
     bot.send_message(message.chat.id, 'Шарик - /ball\nКомплимент - /comp\nРофл команда - /start')
 
+@bot.message_handler(commands=['website'])
+def website(message):
+    markup = types.InlineKeyboardMarkup()
+    markup.add(types.InlineKeyboardButton("Посетить", url="https://vk.com/nikitagaidukov"))
+    bot.send_message(message.chat.id, 'Вау', reply_markup=markup)
 
-
-
-#@bot.message_handler()
-#def get_user_text(message):
-#    if message.text == "Привет":
-#        bot.send_message(message.chat.id, "BOOOO")
-#    else:
-#        bot.send_message(message.chat.id, "Пиши /help, а не ерунду всякую")
-
-
+@bot.message_handler(commands=['button'])
+def button(message):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+    ball = types.KeyboardButton('/ball')
+    comp = types.KeyboardButton('/comp')
+    markup.add(ball, comp)
+    bot.send_message(message.chat.id, 'Кнопки появились', reply_markup=markup)
 
 bot.polling(none_stop=True)
